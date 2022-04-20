@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">fclient2</string>
+    <string name="_9" />
+    <string name="enter_the_pin_code" />
+    <string name="_1" />
+    <string name="_2" />
+    <string name="_3" />
+    <string name="_4" />
+    <string name="_5" />
+    <string name="_6" />
+    <string name="_7" />
+    <string name="_8" />
+    <string name="clear" />
+    <string name="_0" />
+    <string name="ok_text" />
 </resources>

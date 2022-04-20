@@ -4,146 +4,76 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
-<<<<<<< Updated upstream
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import org.apache.commons.io.IOUtils;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.example.fclient2.databinding.ActivityMainBinding;
 
-import java.util.Arrays;
-import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
-    // Used to load the 'native-lib' library on application startup
-        static {
-            System.loadLibrary("fclient2");
-            System.loadLibrary("mbedcrypto");
+    // Used to load the 'RPO2022' library on application startup.
+//    static {
+//        System.loadLibrary("fclient2");
+//        System.loadLibrary("mbedcrypto");
+//    }
+
+    private ActivityMainBinding binding;
+
+    // Метод, который возвращает название говносайта
+    protected String getPageTitle(String html) {
+        Pattern pattern = Pattern.compile("<title>(.+?)</title>", Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(html);
+
+        String p;
+        if (matcher.find()) {
+            p = matcher.group(1);
+        } else {
+            p = "Not found";
         }
-=======
-import android.view.View;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import android.app.Activity;
-import android.content.Intent;
-
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
-
-public class MainActivity extends AppCompatActivity implements TransactionActivity {
-
-    ActivityResultLauncher<Intent> activityResultLauncher;
-
->>>>>>> Stashed changes
-    static {
-        System.loadLibrary("fclient2");
+        return p;
     }
+
+    // Метод, который тестирует работу http клиента
+    protected void testHttpClient() {
+        new Thread(() -> {
+            try {
+                HttpURLConnection uc = (HttpURLConnection) (new URL("http://10.0.2.2:8081/api/v1/title").openConnection());
+                InputStream inputStream = uc.getInputStream();
+
+                String html = IOUtils.toString(inputStream);
+                String title = getPageTitle(html);
+
+                runOnUiThread(() -> {
+                    Toast.makeText(this, title, Toast.LENGTH_LONG).show();
+                });
+            } catch (Exception exception) {
+                Log.e("fapptag", "Http client fails", exception);
+            }
+        }).start();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-<<<<<<< Updated upstream
-=======
-        activityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        pin = data.getStringExtra("pin");
-                        synchronized (MainActivity.this) {
-                            MainActivity.this.notifyAll();
-                        }
-                    }
-                });
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
->>>>>>> Stashed changes
-        int res = initRng();
-        byte[] rnd = randomBytes(16);
+        Button myButton = (Button) findViewById(R.id.sample_button);
+    }
 
-        Random random = new Random();
-
-        byte[] data = new byte[16];
-        for (int i = 0; i < data.length; ++i) {
-            data[i] = (byte) ((byte) random.nextInt() % 255);
-        }
-        Log.i("data", Arrays.toString(data));
-        byte[] encrypt_data = encrypt(rnd, data);
-
-<<<<<<< Updated upstream
-        byte[] decrypt_data = decrypt(rnd, encrypt_data);
-
-        Log.i("enc_data", Arrays.toString(encrypt_data));
-        Log.i("dec_data", Arrays.toString(decrypt_data));
-
-        TextView tv = findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
-=======
+    // Альтернативный метод нажатия кнопки
     public void onButtonClick(View view) {
-//        new Thread(() -> {
-//            try {
-//                byte[] trd = stringToHex("9F0206000000000100");
-//                transaction(trd);
-//            } catch (Exception exception) {
-//                Log.println(Log.ERROR, "MtLog", Arrays.toString(exception.getStackTrace()));
-//            }
-//        }).start();
-        byte[] trd = stringToHex("9F0206000000000100");
-        transaction(trd);
+        testHttpClient();
     }
-
-    private String pin;
-
-    @Override
-    public String enterPin(int ptc, String amount) {
-        pin = new String();
-
-        Intent intent = new Intent(MainActivity.this, PinpadActivity.class);
-        intent.putExtra("ptc", ptc);
-        intent.putExtra("amount", amount);
-
-        synchronized (MainActivity.this) {
-            activityResultLauncher.launch(intent);
-            try {
-                MainActivity.this.wait();
-            } catch (Exception exception) {
-                Log.println(Log.ERROR, "MtLog", exception.getMessage());
-            }
-        }
-
-        return pin;
-    }
-    @Override
-    public void transactionResult(boolean result) {
-        runOnUiThread(() -> {
-            Toast.makeText(MainActivity.this, result ? "ok" : "failed", Toast.LENGTH_SHORT).show();
-        });
-    }
-
-
-    public static byte[] stringToHex(String s) {
-        byte[] hex;
-        try {
-            hex = Hex.decodeHex(s.toCharArray());
-        } catch (DecoderException ex) {
-            hex = null;
-        }
-        return hex;
->>>>>>> Stashed changes
-    }
-
-    public native String stringFromJNI();
-    public static native int initRng();
-
-    public static native byte[] randomBytes(int no);
-
-    public static native byte[] encrypt(byte[] key, byte[] data);
-
-    public static native byte[] decrypt(byte[] key, byte[] data);
-<<<<<<< Updated upstream
 }
-=======
-
-    public native boolean transaction(byte[] trd);
-
-}
->>>>>>> Stashed changes
