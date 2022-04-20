@@ -1,0 +1,79 @@
+Performing C++ SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
+Change Dir: C:/Users/mglaer/AndroidStudioProjects/libs/spdlog/build/x86_64/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/MinGW/bin/mingw32-make.exe cmTC_9d2d0/fast && C:/MinGW/bin/mingw32-make.exe  -f CMakeFiles\cmTC_9d2d0.dir\build.make CMakeFiles/cmTC_9d2d0.dir/build
+mingw32-make.exe[1]: Entering directory 'C:/Users/mglaer/AndroidStudioProjects/libs/spdlog/build/x86_64/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_9d2d0.dir/src.cxx.o
+C:\Users\mglaer\AppData\Local\Android\Sdk\ndk\21.4.7075529\toolchains\llvm\prebuilt\windows-x86_64\bin\clang++.exe --target=x86_64-none-linux-android21 --gcc-toolchain=C:/Users/mglaer/AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/mglaer/AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -DSPDLOG_COMPILED_LIB -DCMAKE_HAVE_LIBC_PTHREAD -fPIE -std=c++11 -o CMakeFiles\cmTC_9d2d0.dir\src.cxx.o -c C:\Users\mglaer\AndroidStudioProjects\libs\spdlog\build\x86_64\CMakeFiles\CMakeTmp\src.cxx
+C:\Users\mglaer\AndroidStudioProjects\libs\spdlog\build\x86_64\CMakeFiles\CMakeTmp\src.cxx:13:3: error: use of undeclared identifier 'pthread_cancel'
+  pthread_cancel(thread);
+  ^
+1 error generated.
+CMakeFiles\cmTC_9d2d0.dir\build.make:83: recipe for target 'CMakeFiles/cmTC_9d2d0.dir/src.cxx.o' failed
+mingw32-make.exe[1]: *** [CMakeFiles/cmTC_9d2d0.dir/src.cxx.o] Error 1
+mingw32-make.exe[1]: Leaving directory 'C:/Users/mglaer/AndroidStudioProjects/libs/spdlog/build/x86_64/CMakeFiles/CMakeTmp'
+Makefile:139: recipe for target 'cmTC_9d2d0/fast' failed
+mingw32-make.exe: *** [cmTC_9d2d0/fast] Error 2
+
+
+Source file was:
+#include <pthread.h>
+
+void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_cancel(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: C:/Users/mglaer/AndroidStudioProjects/libs/spdlog/build/x86_64/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/MinGW/bin/mingw32-make.exe cmTC_635c7/fast && C:/MinGW/bin/mingw32-make.exe  -f CMakeFiles\cmTC_635c7.dir\build.make CMakeFiles/cmTC_635c7.dir/build
+mingw32-make.exe[1]: Entering directory 'C:/Users/mglaer/AndroidStudioProjects/libs/spdlog/build/x86_64/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_635c7.dir/CheckFunctionExists.cxx.o
+C:\Users\mglaer\AppData\Local\Android\Sdk\ndk\21.4.7075529\toolchains\llvm\prebuilt\windows-x86_64\bin\clang++.exe --target=x86_64-none-linux-android21 --gcc-toolchain=C:/Users/mglaer/AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/mglaer/AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -DSPDLOG_COMPILED_LIB -DCHECK_FUNCTION_EXISTS=pthread_create -fPIE -std=c++11 -o CMakeFiles\cmTC_635c7.dir\CheckFunctionExists.cxx.o -c C:\Users\mglaer\AndroidStudioProjects\libs\spdlog\build\x86_64\CMakeFiles\CheckLibraryExists\CheckFunctionExists.cxx
+Linking CXX executable cmTC_635c7
+C:\Users\mglaer\AppData\Local\Android\Sdk\cmake\3.18.1\bin\cmake.exe -E cmake_link_script CMakeFiles\cmTC_635c7.dir\link.txt --verbose=1
+C:\Users\mglaer\AppData\Local\Android\Sdk\ndk\21.4.7075529\toolchains\llvm\prebuilt\windows-x86_64\bin\clang++.exe --target=x86_64-none-linux-android21 --gcc-toolchain=C:/Users/mglaer/AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/mglaer/AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -DSPDLOG_COMPILED_LIB -DCHECK_FUNCTION_EXISTS=pthread_create -Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libgcc_real.a -Wl,--exclude-libs,libatomic.a -static-libstdc++ -Wl,--build-id -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments -Wl,--gc-sections   CMakeFiles/cmTC_635c7.dir/CheckFunctionExists.cxx.o -o cmTC_635c7  -lpthreads -latomic -lm 
+C:/Users/mglaer/AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/lib/gcc/x86_64-linux-android/4.9.x/../../../../x86_64-linux-android/bin\ld: error: cannot find -lpthreads
+clang++: error: linker command failed with exit code 1 (use -v to see invocation)
+CMakeFiles\cmTC_635c7.dir\build.make:104: recipe for target 'cmTC_635c7' failed
+mingw32-make.exe[1]: *** [cmTC_635c7] Error 1
+mingw32-make.exe[1]: Leaving directory 'C:/Users/mglaer/AndroidStudioProjects/libs/spdlog/build/x86_64/CMakeFiles/CMakeTmp'
+Makefile:139: recipe for target 'cmTC_635c7/fast' failed
+mingw32-make.exe: *** [cmTC_635c7/fast] Error 2
+
+
+
+Determining if the function pthread_create exists in the pthread failed with the following output:
+Change Dir: C:/Users/mglaer/AndroidStudioProjects/libs/spdlog/build/x86_64/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/MinGW/bin/mingw32-make.exe cmTC_5bb19/fast && C:/MinGW/bin/mingw32-make.exe  -f CMakeFiles\cmTC_5bb19.dir\build.make CMakeFiles/cmTC_5bb19.dir/build
+mingw32-make.exe[1]: Entering directory 'C:/Users/mglaer/AndroidStudioProjects/libs/spdlog/build/x86_64/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_5bb19.dir/CheckFunctionExists.cxx.o
+C:\Users\mglaer\AppData\Local\Android\Sdk\ndk\21.4.7075529\toolchains\llvm\prebuilt\windows-x86_64\bin\clang++.exe --target=x86_64-none-linux-android21 --gcc-toolchain=C:/Users/mglaer/AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/mglaer/AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -DSPDLOG_COMPILED_LIB -DCHECK_FUNCTION_EXISTS=pthread_create -fPIE -std=c++11 -o CMakeFiles\cmTC_5bb19.dir\CheckFunctionExists.cxx.o -c C:\Users\mglaer\AndroidStudioProjects\libs\spdlog\build\x86_64\CMakeFiles\CheckLibraryExists\CheckFunctionExists.cxx
+Linking CXX executable cmTC_5bb19
+C:\Users\mglaer\AppData\Local\Android\Sdk\cmake\3.18.1\bin\cmake.exe -E cmake_link_script CMakeFiles\cmTC_5bb19.dir\link.txt --verbose=1
+C:\Users\mglaer\AppData\Local\Android\Sdk\ndk\21.4.7075529\toolchains\llvm\prebuilt\windows-x86_64\bin\clang++.exe --target=x86_64-none-linux-android21 --gcc-toolchain=C:/Users/mglaer/AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/mglaer/AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -DSPDLOG_COMPILED_LIB -DCHECK_FUNCTION_EXISTS=pthread_create -Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libgcc_real.a -Wl,--exclude-libs,libatomic.a -static-libstdc++ -Wl,--build-id -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments -Wl,--gc-sections   CMakeFiles/cmTC_5bb19.dir/CheckFunctionExists.cxx.o -o cmTC_5bb19  -lpthread -latomic -lm 
+C:/Users/mglaer/AppData/Local/Android/Sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/windows-x86_64/lib/gcc/x86_64-linux-android/4.9.x/../../../../x86_64-linux-android/bin\ld: error: cannot find -lpthread
+clang++: error: linker command failed with exit code 1 (use -v to see invocation)
+CMakeFiles\cmTC_5bb19.dir\build.make:104: recipe for target 'cmTC_5bb19' failed
+mingw32-make.exe[1]: *** [cmTC_5bb19] Error 1
+mingw32-make.exe[1]: Leaving directory 'C:/Users/mglaer/AndroidStudioProjects/libs/spdlog/build/x86_64/CMakeFiles/CMakeTmp'
+Makefile:139: recipe for target 'cmTC_5bb19/fast' failed
+mingw32-make.exe: *** [cmTC_5bb19/fast] Error 2
+
+
+
