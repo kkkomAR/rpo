@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fclient2">
         <activity
+<<<<<<< Updated upstream
+=======
+            android:name=".TransactionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PinpadActivity"
+            android:exported="false" />
+        <activity
+>>>>>>> Stashed changes
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
