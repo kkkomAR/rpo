@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.18.1)
 
 # Declares and names the project.
 
-project("fclient2")
+project("rpolab")
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
@@ -15,13 +15,25 @@ project("fclient2")
 # Gradle automatically packages shared libraries with your APK.
 
 add_library( # Sets the name of the library.
-        fclient2
+        rpolab
 
         # Sets the library as a shared library.
         SHARED
 
         # Provides a relative path to your source file(s).
         native-lib.cpp)
+add_library(spdlog STATIC IMPORTED)
+add_library(mbedcrypto SHARED IMPORTED)
+
+set_target_properties(spdlog PROPERTIES IMPORTED_LOCATION
+        /Users/user/AndroidStudioProjects/rpolab/libs/spdlog/build/${ANDROID_ABI}/libspdlog.a)
+set_target_properties(mbedcrypto PROPERTIES IMPORTED_LOCATION
+        /Users/user/AndroidStudioProjects/rpolab/libs/mbedtls/build/${ANDROID_ABI}/library/libmbedcrypto.so)
+
+target_include_directories(rpolab PUBLIC
+        /Users/user/AndroidStudioProjects/rpolab/libs/spdlog/spdlog/include
+        /Users/user/AndroidStudioProjects/rpolab/libs/mbedtls/mbedtls/include
+        )
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -41,28 +53,9 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
-        fclient2
-
-        # Links the target library to the log library
-        # included in the NDK.
-        ${log-lib})
-
-add_library(spdlog STATIC IMPORTED)
-set_target_properties(spdlog PROPERTIES IMPORTED_LOCATION
-        C:/Users/mglaer/AndroidStudioProjects/libs/spdlog/build/x86_64/libspdlog.a)
-target_include_directories(fclient2 PUBLIC
-        C:/Users/mglaer/AndroidStudioProjects/libs/spdlog/spdlog/include
-        C:/Users/mglaer/AndroidStudioProjects/libs/mbedtls/mbedtls/include)
-
-add_library(mbedcrypto SHARED IMPORTED)
-set_target_properties(mbedcrypto PROPERTIES IMPORTED_LOCATION
-        C:/Users/mglaer/AndroidStudioProjects/libs/mbedtls/build/x86_64/library/libmbedcrypto.so)
-
-
-target_link_libraries( # Specifies the target library.
-        fclient2
+        rpolab
         spdlog
         mbedcrypto
         # Links the target library to the log library
         # included in the NDK.
-        ${log-lib} )
+        ${log-lib})
